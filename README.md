@@ -1,6 +1,6 @@
-# p0wny@shell:~# -- Single-file PHP Shell
+# b2fshell:~# -- Single-file PHP Shell
 
-p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickly execute commands on a server when pentesting a PHP application. Use it with caution: this script represents a security risk for the server.
+b2fshell:~# is a very basic, single-file, PHP shell. It can be used to quickly execute commands on a server when pentesting a PHP application. Use it with caution: this script represents a security risk for the server.
 
 **This is Spar.. a Fork** from [flozz/p0wny-shell](https://github.com/flozz/p0wny-shell)
 
