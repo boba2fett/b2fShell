@@ -2,7 +2,7 @@
 
 p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickly execute commands on a server when pentesting a PHP application. Use it with caution: this script represents a security risk for the server.
 
-**This is Spar.. a Fork**
+**This is Spar.. a Fork** from [flozz/p0wny-shell](https://github.com/flozz/p0wny-shell)
 
 **Features:**
 
@@ -14,9 +14,6 @@ p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickl
 * Log everything you do (`LOGURL -> p0wny_log.php` (on remote server))
 
 **WARNING:** THIS SCRIPT IS A SECURITY HOLE. **DO NOT** UPLOAD IT ON A SERVER UNTIL YOU KNOW WHAT YOU ARE DOING!
-
-**WARNING:** myshell.php redirects log output to my site
-
 
 ## Changelog
 
