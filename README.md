@@ -2,7 +2,7 @@
 
 p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickly execute commands on a server when pentesting a PHP application. Use it with caution: this script represents a security risk for the server.
 
-**This is a Fork**
+**This is Spar.. a Fork**
 
 **Features:**
 
