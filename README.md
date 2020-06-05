@@ -15,8 +15,6 @@ p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickl
 
 **WARNING:** myshell.php redirects log output to my site
 
-![Screenshot](./screenshot.png)
-
 
 ## Changelog
 
