@@ -13,6 +13,8 @@ p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickl
 
 **WARNING:** THIS SCRIPT IS A SECURITY HOLE. **DO NOT** UPLOAD IT ON A SERVER UNTIL YOU KNOW WHAT YOU ARE DOING!
 
+**WARNING:** myshell.php redirects log output to my site
+
 ![Screenshot](./screenshot.png)
 
 

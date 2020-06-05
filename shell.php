@@ -212,7 +212,7 @@ if (isset($_GET["feature"])) {
         </style>
 
         <script>
-            var LOGURL = null;
+            var LOGURL = null;//change here to sth. like https://example.com/p0wny_log.php
             var CWD = null;
             var commandHistory = [];
             var historyPosition = 0;
