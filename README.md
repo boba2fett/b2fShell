@@ -9,6 +9,7 @@ p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickl
 * Navigate on the remote file-system (using `cd` command)
 * Upload a file to the server (usig `upload <destination_file_name>` command)
 * Download a file from the server (using `download <file_name>` command)
+* Log everything you do (`LOGURL -> p0wny_log.php` (on remote server))
 
 **WARNING:** THIS SCRIPT IS A SECURITY HOLE. **DO NOT** UPLOAD IT ON A SERVER UNTIL YOU KNOW WHAT YOU ARE DOING!
 
@@ -17,16 +18,4 @@ p0wny@shell:~# is a very basic, single-file, PHP shell. It can be used to quickl
 
 ## Changelog
 
-* **2019-06-07:** Adds the `clear` command to clear the terminal (@izharaazmi #12)
-* **2018-12-15:** File upload and download feature (@Oshawk #5)
-* **2018-06-01:**
-  * Auto-completion of command and file names (@lo001 #2)
-  * Adaptation to mobile devices (responsive) (@lo001 #2)
-  * Improved handling of stderr (@lo001 #2)
-* **2018-05-30:**
-  * ES5 compatibility (@lo00l #1)
-  * Dependency to JQuery removed (@lo00l #1)
-  * Command history using arrow keys (@lo00l #1)
-  * Keep the command field focused when pressing the tab key
-* **2017-10-30:** CSS: invalid color fixed
-* **2016-11-10:** Initial release
+* **2020-06-05:** Added Log feature, specify the LOGURL to the location of p0wny_log.php and have fun
