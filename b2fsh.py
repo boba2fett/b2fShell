@@ -10,14 +10,14 @@ class MyPrompt(Cmd):
     prompt = "#"
     def do_upload(self, inp):
         pass
-        return True
  
     def do_download(self, inp):
         pass
-        return True
 
     def default(self, inp):
         pass
+        
+    def do_exit(self, inp):
         return True
  
 
