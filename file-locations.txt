@@ -1,0 +1,6 @@
+/etc/passwd
+/etc/shadow
+
+/var/www/html/*
+/home/*
+/root/*
