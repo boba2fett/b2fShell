@@ -18,3 +18,7 @@ b2fshell:~# is a very basic, single-file, PHP shell. It can be used to quickly e
 ## Changelog
 
 * **2020-06-05:** Added Log feature, specify the LOGURL to the location of b2fshell_log.php and have fun
+
+## TODO
+* Adding a local python interface
+* Adding a certain degree of automation for information gathering

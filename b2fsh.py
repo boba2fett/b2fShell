@@ -30,14 +30,14 @@ class MyPrompt(Cmd):
         return True
  
 
-def gather_infos():
+def gather_infos(): #every file of file-locations.txt until an empty line occurs
     log("getting most important information:")
     global target
     pass
 
-def gather_more():
+def gather_more(): #every file after the empty line
     global target
-    gather_infos()
+    gather_infos() #more should always include the most important and most important should always be first
     log("getting more information:")
     pass
 
@@ -49,7 +49,7 @@ def upload(path):
     global target
     pass
 
-def forkbomb():
+def forkbomb(): #:(){ :|:& };:
     log("leaving forkbomb")
     pass
 
