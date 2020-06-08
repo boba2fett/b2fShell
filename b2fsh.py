@@ -8,6 +8,7 @@ import base64
 import pathlib
 import datetime
 
+
 asciifelx="""
 ______  _____ ______   _   _            _  _ 
 | ___ \/ __  \|  ___| | | | |          | || |
@@ -44,6 +45,19 @@ class MyPrompt(Cmd):
     def default(self, inp):
         shell(inp)
         self.update_prompt()
+
+    def completedefault(self, text, line, begidx, endidx):
+        line=line.split(" ")
+        resp = request("?feature=hint",{"filename": text, "cwd": CWD, "type": "file"})
+        resp["files"]=list(filter(None,resp["files"]))
+        return resp["files"]
+
+    def completenames(self, text, *ignored):
+        dotext = 'do_'+text
+        docmds = [a[3:] for a in self.get_names() if a.startswith(dotext)]
+        resp = request("?feature=hint",{"filename": text, "cwd": CWD, "type": "cmd"})
+        resp["files"]=list(filter(None,resp["files"]))
+        return docmds+resp["files"]
         
     def do_exit(self, inp):
         print("")
