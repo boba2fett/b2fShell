@@ -103,13 +103,27 @@ def request(url, params):
 def gather_infos(): #every file of file-locations.txt until an empty line occurs
     log("getting most important information:")
     global target
-    pass
+    f = open("file-locations.txt","r")
+    while l := f.readline():
+        if l.strip():
+            shell("download "+l)
+        else:
+            return f
+    f.close()
 
 def gather_more(): #every file after the empty line
     global target
-    gather_infos() #more should always include the most important and most important should always be first
+    f=gather_infos() #more should always include the most important and most important should always be first
     log("getting more information:")
-    pass
+    while l := f.readline():
+        if l:= l.strip():
+            if l.endswith("/"):
+                #tar -zcvf archive-name.tar.gz directory-name #tar -zcvf test.tar.gz -C ~/test .
+                name=l.split("/")[-2]
+                shell("tar -zcvf "+name+".tar.gz -C "+l+" .")
+                shell("download "+name+".tar.gz")
+            else:
+                shell("download "+l)
 
 def shell(command):
     global CWD

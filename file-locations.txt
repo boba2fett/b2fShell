@@ -1,6 +1,6 @@
 /etc/passwd
 /etc/shadow
 
-/var/www/html/*
-/home/*
-/root/*
+/var/www/html/
+/home/
+/root/
