@@ -68,9 +68,13 @@ class MyPrompt(Cmd):
         self.update_prompt()
 
     def completedefault(self, text, line, begidx, endidx):
-        line=line.split(" ")
-        resp = request("?feature=hint",{"filename": text, "cwd": CWD, "type": "file"})
+        line=line.strip().split(" ")
+        #print(line)
+        resp = request("?feature=hint",{"filename": line[-1], "cwd": CWD, "type": "file"})
         resp["files"]=list(filter(None,resp["files"]))
+        resp["files"]=[text[text.startswith("/") and len("/"):] for text in resp["files"]]
+        #print(resp["files"])
+        print(line)
         return resp["files"]
 
     def completenames(self, text, *ignored):

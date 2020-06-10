@@ -2,5 +2,5 @@
 /etc/shadow
 
 /var/www/html/
-/home/
+/home/*/.bash_history
 /root/
