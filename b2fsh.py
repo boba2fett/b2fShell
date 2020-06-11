@@ -163,6 +163,7 @@ def log(msg):
 def warn(msg):
     print(Fore.YELLOW+msg+Style.RESET_ALL)
 
+#TODO add file support
 def main(target, infos: ('extracts the most important information', 'flag', 'i'),more: ('extracts the all important information', 'flag', 'm'),disturb: ('leaves disturbtion', 'flag', 'd'),auto: ('non interactive', 'flag', 'a')):
     "Use with b2fshell.php or b2fshell-headless.php"
     globals()['target'] = target
