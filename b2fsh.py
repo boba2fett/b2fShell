@@ -69,11 +69,9 @@ class MyPrompt(Cmd):
 
     def completedefault(self, text, line, begidx, endidx):
         line=line.strip().split(" ")
-        #print(line)
         resp = request("?feature=hint",{"filename": line[-1], "cwd": CWD, "type": "file"})
         resp["files"]=list(filter(None,resp["files"]))
         resp["files"]=[text[text.startswith("/") and len("/"):] for text in resp["files"]]
-        #print(resp["files"])
         print(line)
         return resp["files"]
 
@@ -85,8 +83,8 @@ class MyPrompt(Cmd):
         return docmds+resp["files"]
         
     def do_exit(self, inp):
+        global disturb
         print("")
-        global fork
         if disturb:
             disturbtion()
         
@@ -168,7 +166,6 @@ def log(msg):
 def warn(msg):
     print(Fore.YELLOW+msg+Style.RESET_ALL)
 
-#TODO add file support
 def main(target, infos: ('extracts the most important information', 'flag', 'i'),more: ('extracts the all important information', 'flag', 'm'),disturb: ('leaves disturbtion', 'flag', 'd'),auto: ('non interactive', 'flag', 'a'),filein: ("readin file to exec", 'option', 'f')):
     "Use with b2fshell.php or b2fshell-headless.php"
     globals()['target'] = target
