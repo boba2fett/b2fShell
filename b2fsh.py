@@ -1,13 +1,13 @@
 #!/usr/bin/env python3.8
 import sys, os
 from cmd import Cmd
-from colorama import Fore, Back, Style
+from colorama import Fore, Back, Style, Cursor
 import requests
 import json
 import base64
 import pathlib
 import datetime
-
+import readline
 
 asciifelx="""
 ______  _____ ______   _   _            _  _ 
@@ -27,15 +27,26 @@ target=""
 disturb=False
 CWD="~"
 host=None
+connected=False
 
 
 class MyPrompt(Cmd):
     def update_prompt(self):
-        global CWD,host
-        if CWD=="~":
-            self.prompt = Fore.YELLOW+"b2fsh@"+host+Fore.WHITE+":"+Fore.BLUE+CWD+Fore.WHITE+" $ "+Style.RESET_ALL
-        else:
+        global CWD,host,connected
+        if connected:
+            #if Fore.YELLOW in self.prompt:
+            #print(str(Fore.YELLOW))
+            #print(str(self.prompt))
+            if Fore.YELLOW in self.prompt:# gets hooked somehow
+                #print("\r"+self.prompt,end='')
+                #print("lool")
+                #line=readline.get_line_buffer()
+                #print(len(line),end='')
+                #print(line,end="")
+                self.prompt = Fore.GREEN+"b2fsh@"+host+Fore.WHITE+":"+Fore.BLUE+CWD+Fore.WHITE+" $ "+Style.RESET_ALL
             self.prompt = Fore.GREEN+"b2fsh@"+host+Fore.WHITE+":"+Fore.BLUE+CWD+Fore.WHITE+" $ "+Style.RESET_ALL
+        else:
+            self.prompt = Fore.YELLOW+"b2fsh@"+host+Fore.WHITE+":"+Fore.BLUE+CWD+Fore.WHITE+" $ "+Style.RESET_ALL
 
     def do_upload(self, inp):
         inp=inp.split(" ")
@@ -63,6 +74,7 @@ class MyPrompt(Cmd):
             return li
         else:
             resp = request("?feature=hint",{"filename": text, "cwd": CWD, "type": "file"})
+            self.update_prompt()#has no effect
             if resp:
                 resp["files"]=list(filter(None,resp["files"]))
                 return resp["files"]
@@ -76,6 +88,7 @@ class MyPrompt(Cmd):
     def completedefault(self, text, line, begidx, endidx):
         line=line.strip().split(" ")
         resp = request("?feature=hint",{"filename": line[-1], "cwd": CWD, "type": "file"})
+        self.update_prompt()
         if resp:
             resp["files"]=list(filter(None,resp["files"]))
             resp["files"]=[text[text.startswith("/") and len("/"):] for text in resp["files"]]
@@ -88,11 +101,14 @@ class MyPrompt(Cmd):
         dotext = 'do_'+text
         docmds = [a[3:] for a in self.get_names() if a.startswith(dotext)]
         resp = request("?feature=hint",{"filename": text, "cwd": CWD, "type": "cmd"})
+        self.update_prompt()
         if resp:
+            if "download".startswith(text):
+                docmds.append("download")
             resp["files"]=list(filter(None,resp["files"]))
             return docmds+resp["files"]
         else:
-            return list()
+            return docmds
         
     def do_exit(self, inp):
         global disturb
@@ -111,19 +127,22 @@ class MyPrompt(Cmd):
 
 
 def request(url, params):
-    global target
+    global target,connected
     response=None
     try:
         response=requests.post(target+url, data=params)
     except:
+        connected=False
         warn("request failed")
         return None
     try:
         response=response.json()
     except:
+        connected=False
         warn("convertion to json failed, Did you cat a binary? Logging raw:")
         log(str(response.text))
         return None
+    connected=True
     return response
 
 def gather_infos(): #every file of file-locations.txt until an empty line occurs
