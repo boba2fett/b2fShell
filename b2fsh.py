@@ -9,7 +9,7 @@ import pathlib
 import datetime
 import readline
 
-asciifelx="""
+asciiflex="""
 ______  _____ ______   _   _            _  _ 
 | ___ \/ __  \|  ___| | | | |          | || |
 | |_/ /`' / /'| |_   / __)| |__    ___ | || |
@@ -228,7 +228,7 @@ def main(target, infos: ('extracts the most important information', 'flag', 'i')
 
     if not auto:
         myp.update_prompt()
-        myp.cmdloop(intro=asciifelx)
+        myp.cmdloop(intro=asciiflex)
     else:
         if disturb:
             disturbtion()
