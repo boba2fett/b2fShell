@@ -346,7 +346,7 @@ if (isset($_GET["feature"])) {
                     var splittedCwd = cwd.split("/");
                     shortCwd = "…/" + splittedCwd[splittedCwd.length-2] + "/" + splittedCwd[splittedCwd.length-1];
                 }
-                return "p0wny@shell:<span title=\"" + cwd + "\">" + shortCwd + "</span>#";
+                return "pny@Sh:<span title=\"" + cwd + "\">" + shortCwd + "</span>#";
             }
 
             function updateCwd(cwd) {
@@ -453,12 +453,14 @@ if (isset($_GET["feature"])) {
         <div id="shell">
             <pre id="shell-content">
                 <div id="shell-logo">
-______  _____ ______   _   _            _  _ <span></span>
-| ___ \/ __  \|  ___| | | | |          | || |<span></span>
-| |_/ /`' / /'| |_   / __)| |__    ___ | || |<span></span>
-| ___ \  / /  |  _|  \__ \| '_ \  / _ \| || |<span></span>
-| |_/ /./ /___| |    (   /| | | ||  __/| || |<span></span>
-\____/ \_____/\_|     |_| |_| |_| \___||_||_|<span></span>
+                   _____ _     <span></span>
+                  /  ___| |    <span></span>
+ _ __  _ __  _   _\ `--.| |__  <span></span>
+| '_ \| '_ \| | | |`--. \ '_ \ <span></span>
+| |_) | | | | |_| /\__/ / | | |<span></span>
+| .__/|_| |_|\__, \____/|_| |_|<span></span>
+| |           __/ |            <span></span>
+|_|          |___/             <span></span>
                 </div>
             </pre>
             <div id="shell-input">

@@ -1,6 +1,6 @@
-# b2fshell:~# -- Single-file PHP Shell
+# pnySh:~# -- Single-file PHP Shell
 
-b2fshell:~# is a very basic, single-file, PHP shell. It can be used to quickly execute commands on a server when pentesting a PHP application. Use it with caution: this script represents a security risk for the server.
+pnySh:~# is a very basic, single-file, PHP shell. It can be used to quickly execute commands on a server when pentesting a PHP application. Use it with caution: this script represents a security risk for the server.
 
 **This is Spar.. a Fork** from [flozz/p0wny-shell](https://github.com/flozz/p0wny-shell)
 
@@ -17,4 +17,4 @@ b2fshell:~# is a very basic, single-file, PHP shell. It can be used to quickly e
 
 ## Changelog
 
-* **2020-06-05:** Added Log feature, specify the LOGURL to the location of b2fshell_log.php and have fun
+* **2020-06-05:** Added Log feature, specify the LOGURL to the location of pnySh_log.php and have fun
