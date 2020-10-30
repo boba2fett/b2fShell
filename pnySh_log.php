@@ -10,8 +10,8 @@ function featureLog($out, $cwd, $cmd) {
     $time=date('H').'-'.date('i').'-'.date('s'); //could collide with two request in one second, if this matters consider .'-'.date('v')
     mkdir('p0wny_log/');
     mkdir('p0wny_log/'.$date.'/');
-    $fcmd = @fopen('p0wny_log/'.$date.'/'.$time.'_cmd', 'w');
-    $fout = @fopen('p0wny_log/'.$date.'/'.$time.'_out', 'w');
+    $fcmd = @fopen('pnySh_log/'.$date.'/'.$time.'_cmd', 'w');
+    $fout = @fopen('pnySh_log/'.$date.'/'.$time.'_out', 'w');
 
 
     if ($fcmd === FALSE || $fout === FALSE) {//change this to write anyway to lose no data for information gathering
